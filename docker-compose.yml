@@ -1,0 +1,24 @@
+version: "3.3"
+services:
+    controller:
+        build:
+            context: .
+            dockerfile: ./controller
+        volumes:
+            - type: volume
+              source: keys
+              target: /keys/
+        command: ["/bin/sh","-c","cp ~/.ssh/id_rsa.pub /keys/authorized_keys && while true; do sleep 10s ; done"]
+    node:
+        build:
+            context: .
+            dockerfile: ./nodes
+        volumes:
+            - type: volume
+              source: keys
+              target: /root/.ssh/
+        depends_on:
+            - controller
+              #command: ["while true; do sleep 10s ; done"]
+volumes:
+    keys:
