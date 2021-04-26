@@ -1,0 +1,9 @@
+FROM alpine:latest
+
+RUN apk update \
+    && apk add openssh vim curl ansible iproute2 \
+    && mkdir /authorized_keys \
+    && ssh-keygen -f ~/.ssh/id_rsa -N ''
+EXPOSE 80
+EXPOSE 22
+EXPOSE 443

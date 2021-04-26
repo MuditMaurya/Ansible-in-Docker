@@ -1,0 +1,14 @@
+FROM alpine:latest
+USER root
+RUN apk update \
+	&& apk add openssh \
+	&& ssh-keygen -A
+WORKDIR /home/
+RUN passwd -d root
+COPY entrypoint.sh .
+RUN chmod a+x entrypoint.sh
+EXPOSE 80
+EXPOSE 22
+EXPOSE 443
+
+ENTRYPOINT ["./entrypoint.sh"]
