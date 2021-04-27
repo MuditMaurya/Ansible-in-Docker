@@ -8,7 +8,7 @@ services:
             - type: volume
               source: keys
               target: /keys/
-        command: ["/bin/sh","-c","cp ~/.ssh/id_rsa.pub /keys/authorized_keys && while true; do sleep 10s ; done"]
+        command: ['/bin/sh','-c','echo -e "StrictHostKeyChecking no \nUserKnownHostsFile /dev/null \nLogLevel QUIET" >> /etc/ssh/ssh_config &&cp ~/.ssh/id_rsa.pub /keys/authorized_keys && while true; do sleep 10s ; done']
     node1:
         build:
             context: .

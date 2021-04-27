@@ -1,7 +1,7 @@
 FROM alpine:latest
 USER root
 RUN apk update \
-	&& apk add openssh \
+	&& apk add openssh python3.9 \
 	&& ssh-keygen -A
 WORKDIR /home/
 RUN passwd -d root
