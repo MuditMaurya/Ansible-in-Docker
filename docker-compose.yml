@@ -9,6 +9,7 @@ services:
               source: keys
               target: /keys/
         command: ['/bin/sh','-c','echo -e "StrictHostKeyChecking no \nUserKnownHostsFile /dev/null \nLogLevel QUIET" >> /etc/ssh/ssh_config &&cp ~/.ssh/id_rsa.pub /keys/authorized_keys && while true; do sleep 10s ; done']
+        container_name: ansible-controller
     node1:
         build:
             context: .
