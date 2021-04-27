@@ -4,7 +4,7 @@ RUN apk update \
     && apk add openssh vim curl ansible iproute2 \
     && mkdir /authorized_keys \
     && mkdir /etc/ansible \
-    && touch /etc/ansible/hosts
+    && touch /etc/ansible/hosts \
     && ssh-keygen -f ~/.ssh/id_rsa -N ''
 EXPOSE 80
 EXPOSE 22
