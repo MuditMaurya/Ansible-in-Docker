@@ -1,11 +1,8 @@
 FROM alpine:latest
 
 RUN apk update \
-    && apk add openssh vim curl ansible iproute2 \
+    && apk add openssh ansible vim \
     && mkdir /authorized_keys \
     && mkdir /etc/ansible \
     && touch /etc/ansible/hosts \
     && ssh-keygen -f ~/.ssh/id_rsa -N ''
-EXPOSE 80
-EXPOSE 22
-EXPOSE 443
