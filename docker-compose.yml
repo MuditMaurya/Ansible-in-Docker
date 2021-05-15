@@ -17,18 +17,23 @@ services:
     node1:
         build:
             context: .
-            dockerfile: ./nodes
+            dockerfile: ./nodes 
+        volumes:
+            - type: volume
+              source: keys
+              target: /root/.ssh/
+        depends_on:
+            - controller 
+    node2:
+        image: ansible-in-docker_node1:latest
         volumes:
             - type: volume
               source: keys
               target: /root/.ssh/
         depends_on:
             - controller
-              #command: ["while true; do sleep 10s ; done"]
-    node2:
-        build:
-            context: .
-            dockerfile: ./nodes
+    node3:
+        image: ansible-in-docker_node1:latest
         volumes:
             - type: volume
               source: keys
