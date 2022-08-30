@@ -5,6 +5,6 @@ RUN apk update \
     && mkdir /authorized_keys \
     && mkdir /etc/ansible \
     && touch /etc/ansible/hosts \
-    && echo "[defaults]" >> /etc/ansible/ansible.cfg
+    && echo "[defaults]" >> /etc/ansible/ansible.cfg \
     && echo "interpreter_python=auto_silent" >> /etc/ansible/ansible.cfg \
     && ssh-keygen -f ~/.ssh/id_rsa -N ''
