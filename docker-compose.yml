@@ -1,5 +1,13 @@
 version: "3.3"
 services:
+    node:
+        image: node_image:latest
+        build:
+            context: .
+            dockerfile: ./nodes
+        environment:
+            TYPE: build
+        container_name: ansible-build-node-image
     controller:
         build:
             context: .
@@ -12,6 +20,8 @@ services:
         working_dir: /home/
         command: ['/bin/sh','-c','echo -e "StrictHostKeyChecking no \nUserKnownHostsFile /dev/null \nLogLevel QUIET" >> /etc/ssh/ssh_config &&cp ~/.ssh/id_rsa.pub /keys/authorized_keys && while true; do sleep 10s ; done']
         container_name: ansible-controller
+        depends_on:
+            - node
     node1:
         image: node_image:latest
         build:
@@ -23,7 +33,9 @@ services:
               target: /root/.ssh/
         working_dir: /home/
         depends_on:
-            - controller 
+            - controller
+        environment:
+            TYPE: node
     node2:
         image: node_image:latest
         volumes:
@@ -33,6 +45,8 @@ services:
         working_dir: /home/
         depends_on:
             - controller
+        environment:
+            TYPE: node            
     node3:
         image: node_image:latest
         volumes:
@@ -42,5 +56,7 @@ services:
         working_dir: /home/
         depends_on:
             - controller
+        environment:
+            TYPE: node  
 volumes:
     keys:
