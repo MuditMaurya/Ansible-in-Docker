@@ -1,13 +1,21 @@
 version: "3.3"
 services:
     node:
-        image: node_image:latest
+        image: node_alpine:latest
         build:
             context: .
-            dockerfile: ./nodes
+            dockerfile: ./alpine
         environment:
             TYPE: build
-        container_name: ansible-build-node-image
+        container_name: ansible-build-alpine-image
+    ubuntu:
+        image: node_ubuntu:latest
+        build:
+            context: .
+            dockerfile: ./ubuntu
+        environment:
+            TYPE: build
+        container_name: ansible-build-ubuntu-image
     controller:
         build:
             context: .
@@ -23,10 +31,10 @@ services:
         depends_on:
             - node
     node1:
-        image: node_image:latest
+        image: node_alpine:latest
         build:
             context: .
-            dockerfile: ./nodes
+            dockerfile: ./alpine
         volumes:
             - type: volume
               source: keys
@@ -35,9 +43,9 @@ services:
         depends_on:
             - controller
         environment:
-            TYPE: node
+            TYPE: alpine
     node2:
-        image: node_image:latest
+        image: node_alpine:latest
         volumes:
             - type: volume
               source: keys
@@ -46,9 +54,9 @@ services:
         depends_on:
             - controller
         environment:
-            TYPE: node            
+            TYPE: alpine            
     node3:
-        image: node_image:latest
+        image: node_ubuntu:latest
         volumes:
             - type: volume
               source: keys
@@ -57,6 +65,6 @@ services:
         depends_on:
             - controller
         environment:
-            TYPE: node  
+            TYPE: ubuntu  
 volumes:
     keys:

@@ -1,0 +1,11 @@
+FROM alpine:3.17.3
+USER root
+RUN apk update \
+	&& apk add openssh python3 \
+	&& ssh-keygen -A
+WORKDIR /home/
+RUN passwd -d root
+COPY entrypoint.sh .
+RUN chmod a+x entrypoint.sh
+ENTRYPOINT ["./entrypoint.sh"]
+CMD ["tail", "-f", "/dev/null"]
